@@ -17,6 +17,7 @@ class MainWindow(QMainWindow):
 
         file_menu_item = self.menuBar().addMenu("&File")
         help_menu_item = self.menuBar().addMenu("&Help")
+        edit_menu_item = self.menuBar().addMenu("&Edit")
 
         add_student_action = QAction("Add Student", self)
         add_student_action.triggered.connect(self.insert)
@@ -24,6 +25,11 @@ class MainWindow(QMainWindow):
 
         about_action = QAction("About", self)
         help_menu_item.addAction(about_action)
+
+
+        search_action = QAction("Search", self)
+        edit_menu_item.addAction(search_action)
+        edit_menu_item.triggered.connect(self.edit)  # allows to open the new window
 
         self.table = QTableWidget()
         self.table.setColumnCount(4)
@@ -46,6 +52,29 @@ class MainWindow(QMainWindow):
     def insert(self):
         dialog = InsertDialog()
         dialog.exec()
+
+    def edit(self):
+        search = SearchDialog()
+        search.exec()
+
+
+class SearchDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Student Search")
+        self.setFixedWidth(300)
+        self.setFixedHeight(300)
+
+        layout = QVBoxLayout()
+
+        self.search_student = QLineEdit()
+        self.search_student.setPlaceholderText("Name")
+        layout.addWidget(self.search_student)
+
+        button = QPushButton("Search")
+        layout.addWidget(button)
+
+        self.setLayout(layout)
 
 
 class InsertDialog(QDialog):
