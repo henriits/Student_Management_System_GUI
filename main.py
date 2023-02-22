@@ -1,7 +1,8 @@
 import sys
 
 from PyQt6.QtWidgets import QApplication, QVBoxLayout, QLabel, QWidget, QGridLayout, \
-    QLineEdit, QPushButton, QMainWindow, QTableWidget, QTableWidgetItem, QDialog
+    QLineEdit, QPushButton, QMainWindow, QTableWidget, QTableWidgetItem, QDialog, \
+    QVBoxLayout, QComboBox
 
 from PyQt6.QtGui import QAction
 import sqlite3
@@ -10,6 +11,8 @@ import sqlite3
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setFixedWidth(450)
+        self.setFixedHeight(250)
         self.setWindowTitle("Student Management System")
 
         file_menu_item = self.menuBar().addMenu("&File")
@@ -48,7 +51,26 @@ class MainWindow(QMainWindow):
 
 
 class InsertDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Insert Student Data")
+        self.setFixedWidth(300)
+        self.setFixedHeight(300)
 
+        layout = QVBoxLayout()
+
+        # Add student name widget
+        student_name = QLineEdit()
+        student_name.setPlaceholderText("Name")
+        layout.addWidget(student_name)
+
+        # Add combo box of courses
+        course_name = QComboBox()
+        courses = ["Biology", "Math", "Astronomy", "Physics"]
+        course_name.addItems(courses)
+        layout.addWidget(course_name)
+
+        self.setLayout(layout)
 
 app = QApplication(sys.argv)
 student_manager = MainWindow()
