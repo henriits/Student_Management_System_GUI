@@ -145,7 +145,9 @@ class EditDialog(QDialog):
 
 
     def update_student(self):
-        pass
+        connection = sqlite3.connect("database.db")
+        cursor = connection.cursor()
+        cursor.execute("UPDATE students SET name = ?, course = ?, mobile = ? WHERE id = ?",())
 
 
 class InsertDialog(QDialog):
